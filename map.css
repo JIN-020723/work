@@ -1,0 +1,341 @@
+/* ============================================================
+   map.css - BusanStoreMap (Centum City Edition)
+   Leaflet custom styles: markers, popups, clusters, overlays
+   ============================================================ */
+
+/* ---- Leaflet Base Overrides ---- */
+.leaflet-container {
+  background: #1a2540 !important;
+  font-family: 'Noto Sans KR', 'Inter', sans-serif !important;
+}
+
+.leaflet-bar { border: none !important; box-shadow: none !important; }
+.leaflet-bar a {
+  display: none !important; /* hide default controls, we use custom ones */
+}
+
+/* ---- Custom SVG Marker Pins ---- */
+.marker-pin-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5));
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.marker-pin-wrapper:hover {
+  filter: drop-shadow(0 4px 12px rgba(79,142,247,0.5));
+  transform: scale(1.15) translateY(-2px);
+}
+
+.marker-pin-icon {
+  width: 32px; height: 32px;
+  border-radius: 50% 50% 50% 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: white;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.25);
+}
+
+.marker-pin-icon span {
+  transform: rotate(45deg);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.marker-pin-stem {
+  width: 3px; height: 8px;
+  border-radius: 0 0 3px 3px;
+  margin-top: -2px;
+  opacity: 0.7;
+}
+
+/* Brand-specific pin colors */
+.brand-gs25   .marker-pin-icon { background: linear-gradient(135deg, #007BC4, #00a3ff); }
+.brand-gs25   .marker-pin-stem { background: #007BC4; }
+.brand-cu     .marker-pin-icon { background: linear-gradient(135deg, #82239e, #a541c1); }
+.brand-cu     .marker-pin-stem { background: #82239e; }
+.brand-seven  .marker-pin-icon { background: linear-gradient(135deg, #EE2724, #ff5733); }
+.brand-seven  .marker-pin-stem { background: #EE2724; }
+.brand-emart  .marker-pin-icon { background: linear-gradient(135deg, #e09b00, #FFB81C); }
+.brand-emart  .marker-pin-stem { background: #e09b00; }
+.brand-ministop .marker-pin-icon { background: linear-gradient(135deg, #004F9F, #1a6dcc); }
+.brand-ministop .marker-pin-stem { background: #004F9F; }
+.brand-other  .marker-pin-icon { background: linear-gradient(135deg, #475569, #64748b); }
+.brand-other  .marker-pin-stem { background: #475569; }
+
+/* ---- Centum City Station Marker ---- */
+.centum-marker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.centum-pulse-ring {
+  position: absolute;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(6, 214, 160, 0.6);
+  animation: pulse-ring 2.2s ease-out infinite;
+  top: -4px; left: -4px;
+}
+
+.centum-pulse-ring:nth-child(2) { animation-delay: 0.7s; }
+.centum-pulse-ring:nth-child(3) { animation-delay: 1.4s; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.centum-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06d6a0, #00b589);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 24px rgba(6,214,160,0.5), 0 4px 12px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 2;
+}
+
+.centum-icon svg {
+  width: 20px; height: 20px;
+  stroke: white; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.centum-label {
+  margin-top: 5px;
+  padding: 3px 8px;
+  background: rgba(6, 214, 160, 0.9);
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #001a12;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ---- Radius Circles (Walk Rings) ---- */
+.leaflet-interactive.walk-ring {
+  stroke-dasharray: 6, 4;
+  stroke-width: 2;
+  cursor: default !important;
+}
+
+/* ---- Cluster Markers ---- */
+.marker-cluster {
+  border-radius: 50% !important;
+  border: 2px solid rgba(255,255,255,0.15) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
+}
+
+.marker-cluster div {
+  border-radius: 50% !important;
+  font-family: 'Noto Sans KR', 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.marker-cluster-small {
+  background-color: rgba(79, 142, 247, 0.35) !important;
+}
+
+.marker-cluster-small div {
+  background-color: rgba(79, 142, 247, 0.7) !important;
+}
+
+.marker-cluster-medium {
+  background-color: rgba(124, 92, 252, 0.35) !important;
+}
+
+.marker-cluster-medium div {
+  background-color: rgba(124, 92, 252, 0.7) !important;
+}
+
+.marker-cluster-large {
+  background-color: rgba(238, 39, 36, 0.35) !important;
+}
+
+.marker-cluster-large div {
+  background-color: rgba(238, 39, 36, 0.7) !important;
+}
+
+/* ---- Popup Card ---- */
+.leaflet-popup-content-wrapper {
+  background: rgba(11, 17, 40, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(79,142,247,0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.leaflet-popup-tip-container { display: none !important; }
+
+.leaflet-popup-close-button {
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 18px !important;
+  top: 8px !important;
+  right: 10px !important;
+  padding: 0 !important;
+  z-index: 10;
+}
+
+.leaflet-popup-close-button:hover { color: white !important; }
+
+.leaflet-popup-content { margin: 0 !important; width: auto !important; }
+
+/* ---- Popup Inner Content ---- */
+.popup-card {
+  padding: 18px 20px 16px;
+  min-width: 240px;
+  max-width: 300px;
+}
+
+.popup-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.popup-brand-badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.popup-name {
+  flex: 1;
+}
+
+.popup-name h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0f4ff;
+  line-height: 1.2;
+}
+
+.popup-name .branch {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 1px;
+}
+
+.popup-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 0 12px 0;
+}
+
+.popup-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+}
+
+.popup-row svg {
+  width: 13px; height: 13px;
+  stroke: rgba(255,255,255,0.35);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.popup-row span { color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+.popup-walk-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(6, 214, 160, 0.08);
+  border: 1px solid rgba(6, 214, 160, 0.18);
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.popup-walk-info svg {
+  width: 14px; height: 14px;
+  stroke: #06d6a0; fill: none;
+  stroke-width: 2; stroke-linecap: round;
+}
+
+.popup-walk-time {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #06d6a0;
+}
+
+.popup-walk-dist {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  margin-left: auto;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.popup-action-btn {
+  flex: 1;
+  padding: 7px 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.65);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.popup-action-btn:hover {
+  background: rgba(79,142,247,0.15);
+  border-color: rgba(79,142,247,0.4);
+  color: #4f8ef7;
+}
+
+.popup-action-btn.copy-btn:hover {
+  background: rgba(6,214,160,0.1);
+  border-color: rgba(6,214,160,0.3);
+  color: #06d6a0;
+}
+
+.popup-action-btn svg {
+  width: 11px; height: 11px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round;
+}
+
+/* ---- Tile Layer Dark Style ---- */
+.leaflet-tile-pane { filter: brightness(0.78) saturate(0.8) hue-rotate(210deg); }
